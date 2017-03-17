@@ -1,8 +1,5 @@
 package benchmark;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BenchmarkThread implements Runnable {
 
    @SuppressWarnings("serial")
@@ -20,9 +17,9 @@ public class BenchmarkThread implements Runnable {
    @Override
    public void run() {
       long start = System.currentTimeMillis();
-      List<Integer[]> coll = new ArrayList<>();
+      Integer[] tmp;
       for (int i = 0; i < this.instancesNo; i++) {
-         coll.add(new Integer[this.arraySize]);
+         tmp = new Integer[this.arraySize];
       }
       this.time = System.currentTimeMillis() - start;
    }
