@@ -1,5 +1,6 @@
 package main;
 
+import java.util.List;
 import benchmark.Benchmark;
 
 public class Main {
@@ -40,35 +41,45 @@ public class Main {
          int allocations = getArgValue(args, ALLOCATIONS_ARG_NAME, null);
          checkPositive(allocations);
          int arrSize = getArgValue(args, SIZE_ARG_NAME, -1);
-         //TODO
-         long totalTimeInMilis = new Benchmark(threads, allocations, arrSize).run();
-         processResults(totalTimeInMilis);
+         List<Long> results = new Benchmark(threads, allocations, arrSize).run();
+         processResults(results, threads);
       } catch (ArgumentsParsingException e) {
          System.out.println(e.getMessage());
       }
    }
 
-   private static void processResults(long totalTimeInMilis) {
-      // TODO Auto-generated method stub
+   private static void processResults(List<Long> results, int threads) {
+      long avgTime = 0l;
+      for (Long l : results) {
+         avgTime += l;
+      }
+      System.out.println("avg time: " + (avgTime / threads));
    }
 
    private static int getArgValue(String[] args, String name, Integer defaultValue) throws ArgumentsParsingException {
       String arg = findArg(args, name);
       if (arg == null) {
-         if (defaultValue != null) {
-            return defaultValue;
-         } else {
-            throw new ArgumentsParsingException("Parameter " + name + " missing.");
+         return checkDefault(defaultValue, name);
+      } else {
+         if (arg.split("=").length < 2) {
+            // case example: "-threads="
+            return checkDefault(defaultValue, name);
+         }
+         arg = arg.split("=")[1];
+         try {
+            return Integer.valueOf(arg);
+         } catch (NumberFormatException e) {
+            throw new ArgumentsParsingException("Passed invalid value with \"" + name + "\" parameter (" + arg + ").");
          }
       }
-      int val = -1;
-      arg = arg.split("=")[1];
-      try {
-         val = Integer.valueOf(arg);
-      } catch (NumberFormatException e) {
-         throw new ArgumentsParsingException("Passed invalid value with \"" + name + "\" parameter (" + arg + ").");
+   }
+
+   private static int checkDefault(Integer defaultValue, String name) throws ArgumentsParsingException {
+      if (defaultValue != null) {
+         return defaultValue;
+      } else {
+         throw new ArgumentsParsingException("Parameter " + name + " missing.");
       }
-      return val;
    }
 
    private static String findArg(String[] args, String toFind) {
