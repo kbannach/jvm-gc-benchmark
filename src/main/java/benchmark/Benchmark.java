@@ -3,6 +3,8 @@ package benchmark;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import benchmark.BenchmarkThread.NotFinishedYetException;
 
 public class Benchmark {
@@ -21,16 +23,18 @@ public class Benchmark {
    }
 
    /**
-    * @return sum of times of executions
+    * @return times of execution of each thread
     */
-   public long run() {
+   public List<Long> run() {
       int instPerThread = this.allocationsNo / this.threadsNo;
       BenchmarkThread[] tab = new BenchmarkThread[this.threadsNo];
       for (int i = 0; i < this.threadsNo; i++) {
          tab[i] = new BenchmarkThread(instPerThread, this.arraySize);
       }
+      // execute threads
+      ExecutorService service = Executors.newFixedThreadPool(this.threadsNo);
       for (BenchmarkThread bt : tab) {
-         bt.run();
+         service.execute(bt);
       }
       // collect results
       List<Long> results = new ArrayList<>(tab.length);
@@ -45,10 +49,7 @@ public class Benchmark {
             }
          }
       }
-      long res = 0l;
-      for (Long l : results) {
-         res += l;
-      }
-      return res;
+      service.shutdown();
+      return results;
    }
 }
