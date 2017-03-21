@@ -47,22 +47,22 @@ else
 		;;
 	esac
     done
-#    exit # TODO
 fi
 
 # create results file
 rm results.txt
 touch results.txt
-# TODO heap size in loop
-printf "heap size: 128 MB\n" >> results.txt
-printf "GC algorithm\t1 thd, fixed size\t1 thd, random size\tn thds, fixed size\tn thds, random size\t" >> results.txt
 
 # run benchmark
 algorithms=(ParallelOld) # CMS G1)
 heap_sizes=(128) # 256 512)
 for hs in ${heap_sizes[*]}; do
-    heap_size="-Xms"$hs"m -Xmx"$hs"m"
+    printf "heap size: '$hs' MB\n" >> results.txt
+    printf "GC algorithm\t1 thd, fixed size\t1 thd, random size\tn thds, fixed size\tn thds, random size\t" >> results.txt
+
+    heap_size='-Xms'$hs'm -Xmx'$hs'm'
     for alg in ${algorithms[*]}; do
+	printf $alg"\t" >> results.txt
 	# run commands
 	# $1 algorithm; $2 heap size; $3 allocations; $4 arrSize; $5 threads
 	exec_java $alg $heap_size $allocations $arrSize '' ;
