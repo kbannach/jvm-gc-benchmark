@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# TODO
-# 1. java args from script execution erguments
-# 2. loop [DONE]
-
 view_usage() {
     sh -c 'java main.Main'
     exit
