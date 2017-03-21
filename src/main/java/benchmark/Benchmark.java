@@ -38,16 +38,14 @@ public class Benchmark {
       }
       // collect results
       List<Long> results = new ArrayList<>(tab.length);
-      for (BenchmarkThread bt : tab) {
+      int i = 0;
+      while (i < tab.length) {
          try {
-            results.add(bt.getTimeInMilisec());
+            results.add(tab[i].getTimeInMilisec());
          } catch (NotFinishedYetException e) {
-            try {
-               wait(10000); //10 sec
-            } catch (InterruptedException e1) {
-               // empty
-            }
+            continue;
          }
+         i++;
       }
       service.shutdown();
       return results;
