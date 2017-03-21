@@ -17,10 +17,10 @@ cleanup() {
 }
 
 exec_java() {
-# $1 algorithm; $2 heap size; $3 allocations; $4 arrSize; $5 threads
+    # $1 algorithm; $2 heap size; $3 allocations; $4 arrSize; $5 threads
 
-    printf "executing: java "$2" -XX:+Use"$1"GC main.Main "$3" "$4" "$5"\n"
-    sh -c "java "$2" -XX:+Use"$1"GC main.Main "$3" "$4" "$5"\n" >> results.txt
+    printf "executing: java "$2" -XX:+Use"$1"GC main.Main "$3" "$4" "$5" \n"
+    sh -c "java "$2" -XX:+Use"$1"GC main.Main "$3" "$4" "$5" \n" >> results.txt
 }
 
 # script
