@@ -35,17 +35,13 @@ public class Main {
    }
 
    private static void runBenchmark(String[] args) {
-      try {
-         int threads = Math.min(8, getArgValue(args, THREADS_ARG_NAME, 1));
-         checkPositive(threads);
-         int allocations = getArgValue(args, ALLOCATIONS_ARG_NAME, null);
-         checkPositive(allocations);
-         int arrSize = getArgValue(args, SIZE_ARG_NAME, -1);
-         List<Long> results = new Benchmark(threads, allocations, arrSize).run();
-         processResults(results, threads);
-      } catch (ArgumentsParsingException e) {
-         System.out.println(e.getMessage());
-      }
+      int threads = Math.min(8, getArgValue(args, THREADS_ARG_NAME, 1));
+      checkPositive(threads);
+      int allocations = getArgValue(args, ALLOCATIONS_ARG_NAME, null);
+      checkPositive(allocations);
+      int arrSize = getArgValue(args, SIZE_ARG_NAME, -1);
+      List<Long> results = new Benchmark(threads, allocations, arrSize).run();
+      processResults(results, threads);
    }
 
    private static void processResults(List<Long> results, int threads) {
@@ -53,10 +49,10 @@ public class Main {
       for (Long l : results) {
          avgTime += l;
       }
-      System.out.println("avg time: " + (avgTime / threads));
+      System.out.print(avgTime / threads);
    }
 
-   private static int getArgValue(String[] args, String name, Integer defaultValue) throws ArgumentsParsingException {
+   private static int getArgValue(String[] args, String name, Integer defaultValue) throws ArgumentParsingException {
       String arg = findArg(args, name);
       if (arg == null) {
          return checkDefault(defaultValue, name);
@@ -69,16 +65,16 @@ public class Main {
          try {
             return Integer.valueOf(arg);
          } catch (NumberFormatException e) {
-            throw new ArgumentsParsingException("Passed invalid value with \"" + name + "\" parameter (" + arg + ").");
+            throw new ArgumentParsingException("Passed invalid value with \"" + name + "\" parameter (" + arg + ").");
          }
       }
    }
 
-   private static int checkDefault(Integer defaultValue, String name) throws ArgumentsParsingException {
+   private static int checkDefault(Integer defaultValue, String name) throws ArgumentParsingException {
       if (defaultValue != null) {
          return defaultValue;
       } else {
-         throw new ArgumentsParsingException("Parameter " + name + " missing.");
+         throw new ArgumentParsingException("Parameter " + name + " missing.");
       }
    }
 
@@ -91,9 +87,9 @@ public class Main {
       return null;
    }
 
-   private static void checkPositive(int val) throws ArgumentsParsingException {
+   private static void checkPositive(int val) throws ArgumentParsingException {
       if (val <= 0) {
-         throw new ArgumentsParsingException("Arguments " + THREADS_ARG_NAME + " and " + ALLOCATIONS_ARG_NAME + " values have to be positive numbers.");
+         throw new ArgumentParsingException("Arguments " + THREADS_ARG_NAME + " and " + ALLOCATIONS_ARG_NAME + " values have to be positive numbers.");
       }
    }
 }
