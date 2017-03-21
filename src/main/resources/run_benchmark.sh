@@ -37,11 +37,11 @@ else
     args=( "$@" )
     for a in ${args[*]}; do
 	case $a in
-	    -allocations* ) allocations='-allocations='$a
+	    -allocations* ) allocations=$a
 		;;
-	    -arrSize* ) arrSize='-arrSize='$a
+	    -arrSize* ) arrSize=$a
 		;;
-	    -threads* ) threads='-threads='$a
+	    -threads* ) threads=$a
 		;;
 	    *) echo "Unknown option: "$a
 		;;
@@ -58,7 +58,7 @@ algorithms=(ParallelOld) # CMS G1)
 heap_sizes=(128) # 256 512)
 for hs in ${heap_sizes[*]}; do
     printf "heap size: '$hs' MB\n" >> results.txt
-    printf "GC algorithm\t1 thd, fixed size\t1 thd, random size\tn thds, fixed size\tn thds, random size\t" >> results.txt
+    printf "GC algorithm\t1 thd, fixed size\t1 thd, random size\tn thds, fixed size\tn thds, random size\n" >> results.txt
 
     heap_size='-Xms'$hs'm -Xmx'$hs'm'
     for alg in ${algorithms[*]}; do
