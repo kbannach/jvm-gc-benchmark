@@ -10,7 +10,6 @@ public class Main {
    public static final String SIZE_ARG_NAME        = "arrSize";
 
    public static void main(String[] args) {
-      System.out.println();
       if (args.length == 0) {
          displayUsage();
       } else {
