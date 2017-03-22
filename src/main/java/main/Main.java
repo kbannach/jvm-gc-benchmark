@@ -1,6 +1,5 @@
 package main;
 
-import java.util.List;
 import benchmark.Benchmark;
 
 public class Main {
@@ -39,16 +38,11 @@ public class Main {
       int allocations = getArgValue(args, ALLOCATIONS_ARG_NAME, null);
       checkPositive(allocations);
       int arrSize = getArgValue(args, SIZE_ARG_NAME, -1);
-      List<Long> results = new Benchmark(threads, allocations, arrSize).run();
-      processResults(results, threads);
-   }
-
-   private static void processResults(List<Long> results, int threads) {
-      long avgTime = 0l;
-      for (Long l : results) {
-         avgTime += l;
-      }
-      System.out.print(avgTime / threads);
+      // allocate and measure
+      long start = System.currentTimeMillis();
+      new Benchmark(threads, allocations, arrSize).run();
+      long totalTime = System.currentTimeMillis() - start;
+      System.out.print(totalTime);
    }
 
    private static int getArgValue(String[] args, String name, Integer defaultValue) throws ArgumentParsingException {
