@@ -9,9 +9,7 @@ import benchmark.BenchmarkThread.NotFinishedYetException;
 
 public class Benchmark {
 
-   // 100 KB = 800 000 bits
-   // 800 000 bits / 32 bits (int) = 25 000 int elements in 1MB array
-   public static final int MAX_ARRAY_SIZE = 25000;
+   public static final int MAX_ARRAY_SIZE = 1000;
    private final int       threadsNo;
    private final int       allocationsNo;
    private final int       arraySize;
