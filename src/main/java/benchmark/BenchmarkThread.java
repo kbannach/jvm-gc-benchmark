@@ -1,6 +1,7 @@
 package benchmark;
 
 import java.util.Random;
+import main.Main;
 
 public class BenchmarkThread implements Runnable {
 
@@ -13,7 +14,6 @@ public class BenchmarkThread implements Runnable {
 
    }
 
-   public static final int MAX_ARRAY_SIZE = 1000;
    private final int       instancesNo;
    private final int       arraySize;
    private long            time           = -1l;
@@ -35,7 +35,7 @@ public class BenchmarkThread implements Runnable {
    }
 
    private int getArraySize() {
-      return this.arraySize > 0 ? this.arraySize : this.rand.nextInt(MAX_ARRAY_SIZE);
+      return this.arraySize > 0 ? this.arraySize : this.rand.nextInt(Main.MAX_ARRAY_SIZE);
    }
 
    public long getTimeInMilisec() throws NotFinishedYetException {
