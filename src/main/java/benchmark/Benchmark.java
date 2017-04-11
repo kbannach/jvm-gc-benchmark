@@ -2,22 +2,20 @@ package benchmark;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import benchmark.BenchmarkThread.NotFinishedYetException;
 
 public class Benchmark {
 
-   public static final int MAX_ARRAY_SIZE = 1000;
-   private final int       threadsNo;
-   private final int       allocationsNo;
-   private final int       arraySize;
+   private final int threadsNo;
+   private final int allocationsNo;
+   private final int arraySize;
 
    public Benchmark(int threadsNo, int allocationsNo, int arraySize) {
       this.threadsNo = threadsNo;
       this.allocationsNo = allocationsNo;
-      this.arraySize = arraySize > 0 ? arraySize : new Random().nextInt(MAX_ARRAY_SIZE);
+      this.arraySize = arraySize;
    }
 
    /**
