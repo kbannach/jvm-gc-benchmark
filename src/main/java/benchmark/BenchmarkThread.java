@@ -14,10 +14,10 @@ public class BenchmarkThread implements Runnable {
 
    }
 
-   private final int       instancesNo;
-   private final int       arraySize;
-   private long            time           = -1l;
-   private final Random    rand           = new Random();
+   private final int    instancesNo;
+   private final int    arraySize;
+   private long         time = -1l;
+   private final Random rand = new Random();
 
    public BenchmarkThread(int instancesNo, int arraySize) {
       this.instancesNo = instancesNo;
@@ -35,7 +35,7 @@ public class BenchmarkThread implements Runnable {
    }
 
    private int getArraySize() {
-      return this.arraySize > 0 ? this.arraySize : this.rand.nextInt(Main.MAX_ARRAY_SIZE);
+      return Math.abs(this.arraySize > 0 ? this.arraySize : this.rand.nextInt(Main.MAX_ARRAY_SIZE));
    }
 
    public long getTimeInMilisec() throws NotFinishedYetException {
