@@ -1,6 +1,7 @@
 package main;
 
 import benchmark.Benchmark;
+import benchmark.BenchmarkThread;
 
 public class Main {
 
@@ -22,7 +23,7 @@ public class Main {
       usage += "argument list:\n";
       usage += "\t" + THREADS_ARG_NAME + " - how many threads to use, default is 1\n";
       usage += "\t" + ALLOCATIONS_ARG_NAME + " - how many objects to allocate\n";
-      usage += "\t" + SIZE_ARG_NAME + " - size of allocated arrays (if negative then this number is generated randomly), default is -1, maximum is " + Benchmark.MAX_ARRAY_SIZE + "\n";
+      usage += "\t" + SIZE_ARG_NAME + " - size of allocated arrays (if negative then this number is generated randomly), default is -1, maximum is " + BenchmarkThread.MAX_ARRAY_SIZE + "\n";
       usage += "\n";
       usage += "Examples:\n";
       usage += "\t- performs 1000000 Integer array allocations with size of 1024 using 4 threads:\n";
@@ -51,7 +52,7 @@ public class Main {
          return checkDefault(defaultValue, name);
       } else {
          if (arg.split("=").length < 2) {
-            // case example: "-threads="
+            // example: "-threads="
             return checkDefault(defaultValue, name);
          }
          arg = arg.split("=")[1];
